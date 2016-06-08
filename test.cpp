@@ -5,6 +5,7 @@
 #include "algorithm.h"
 
 #include <vector>
+#include <utility>
 
 int add(const int&, const int&);
 bool isEven(const int&);
@@ -24,15 +25,12 @@ int main() {
 
 	std::cout << Math::reduce<int>(nums, &add) << std::endl;
 
-	std::vector<std::vector<int> > temp = Math::permutations<int>(nums, 3);
-	
-	for(unsigned i = 0; i < temp.size(); ++i)
-		printVec(temp[i]);
-
-	PrimeSieve p(20);
-	for(unsigned i = 0; i < p.max(); ++i) {
-		std::cout << i << ' ' << p.isPrime(i) << std::endl;
+	PrimeSieve primes;
+	auto primefactors = primes.prime_factorization(120);
+	for(unsigned i = 0; i < primefactors.size(); ++i) {
+		std::cout << primefactors[i].first << ' ' << primefactors[i].second << std::endl;
 	}
+
 	return 0;
 }
 
