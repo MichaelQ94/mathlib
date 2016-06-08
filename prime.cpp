@@ -16,7 +16,11 @@ bool PrimeSieve::isPrime(unsigned n) {
 void PrimeSieve::extendList(unsigned max) {
 	if(max < primesieve.size()) return;
 
-	primesieve = std::vector<bool>(max + 1, true);
+	unsigned size = primesieve.size();
+	while(size < max + 1)
+		size *= 2;
+
+	primesieve = std::vector<bool>(size, true);
 	sieve();
 }
 
