@@ -57,6 +57,28 @@ void PrimeSieve::sift() {
 		}
 }
 
+std::vector<std::pair<unsigned, unsigned> > PrimeSieve::prime_factorization(unsigned n) {
+	extendList(n / 2);
+
+	std::vector<std::pair<unsigned, unsigned> > primefactors;
+	std::pair<unsigned, unsigned> factor;
+
+	for(size_t i = 0; n > 1; ++i) {
+		factor.first = primelist[i];
+		factor.second = 0;
+
+		while(n % factor.first == 0) {
+			++factor.second;
+			n /= factor.first;
+		}
+
+		if(factor.second > 0)
+			primefactors.push_back(factor);
+	}
+
+	return primefactors;
+}
+
 ESieve::ESieve() : numbers(3, true) {
 	sift();
 }

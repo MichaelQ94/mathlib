@@ -2,6 +2,7 @@
 #define PRIME_H
 
 #include <vector>
+#include <utility>
 #include <cstddef>
 
 class PrimeSieve {
@@ -19,6 +20,7 @@ public:
 	size_t size() const;
 	unsigned max() const;
 	unsigned operator[](size_t);
+	std::vector<std::pair<unsigned, unsigned> > prime_factorization(unsigned);
 };
 
 class ESieve {
