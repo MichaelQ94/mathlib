@@ -9,7 +9,7 @@ private:
 	std::vector<bool> primesieve;
 	std::vector<unsigned> primelist;
 
-	void sieve();
+	void sift();
 
 public:
 	PrimeSieve();
@@ -25,7 +25,7 @@ class ESieve {
 private:
 	std::vector<bool> numbers;
 
-	void sieve();
+	void sift();
 public:
 	ESieve();
 	ESieve(unsigned);

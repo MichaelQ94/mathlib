@@ -1,11 +1,11 @@
 #include "prime.h"
 
 PrimeSieve::PrimeSieve() : primesieve(3, true) {
-	sieve();
+	sift();
 }
 
 PrimeSieve::PrimeSieve(unsigned max) : primesieve(max + 1, true) {
-	sieve();
+	sift();
 }
 
 bool PrimeSieve::isPrime(unsigned n) {
@@ -21,7 +21,7 @@ void PrimeSieve::extendList(unsigned max) {
 		size *= 2;
 
 	primesieve = std::vector<bool>(size, true);
-	sieve();
+	sift();
 }
 
 size_t PrimeSieve::size() const {
@@ -36,7 +36,7 @@ unsigned PrimeSieve::operator[](size_t index) {
 	return primelist[index];
 }
 
-void PrimeSieve::sieve() {
+void PrimeSieve::sift() {
 	size_t max = primesieve.size();
 
 	switch(max) {
@@ -58,11 +58,11 @@ void PrimeSieve::sieve() {
 }
 
 ESieve::ESieve() : numbers(3, true) {
-	sieve();
+	sift();
 }
 
 ESieve::ESieve(unsigned max) : numbers(max + 1, true) {
-	sieve();
+	sift();
 }
 
 bool ESieve::isPrime(unsigned num) {
@@ -75,10 +75,10 @@ void ESieve::extendList(unsigned max) {
 
 	numbers = std::move(std::vector<bool>(max + 1, true));
 
-	sieve();
+	sift();
 }
 
-void ESieve::sieve() {
+void ESieve::sift() {
 	switch(numbers.size()) {
 		case 2:
 			numbers[1] = false;
