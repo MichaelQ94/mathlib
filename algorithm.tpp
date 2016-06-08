@@ -16,36 +16,8 @@ template<typename T>
 bool binary_helper(const std::vector<T>&, const T&, size_t, size_t);
 
 //Implementation
-template<typename T>
-Math::UnaryPredicate<T>::UnaryPredicate(Math::UnaryPredicate<T>::UnaryPredicate_ptr unarypredicate)
-	: unary_predicate(unarypredicate) {}
-
-template<typename T>
-bool Math::UnaryPredicate<T>::operator()(const T& val) { return unary_predicate(val); }
-
-template<typename T>
-Math::BinaryPredicate<T>::BinaryPredicate(Math::BinaryPredicate<T>::BinaryPredicate_ptr binarypredicate)
-	: binary_predicate(binarypredicate) {}
-
-template<typename T>
-bool Math::BinaryPredicate<T>::operator()(const T& val1, const T& val2) { return binary_predicate(val1, val2); }
-
-template<typename T>
-Math::MapFunction<T>::MapFunction(Math::MapFunction<T>::MapFunction_ptr mapfunction)
-	: map_function(mapfunction) {}
-
-template<typename T>
-T Math::MapFunction<T>::operator()(const T& val) { return map_function(val); }
-
-template<typename T>
-Math::Accumulator<T>::Accumulator(Math::Accumulator<T>::Accumulator_ptr acc)
-	: accumulator(acc) {}
-
-template<typename T>
-T Math::Accumulator<T>::operator()(const T& val1, const T& val2) { return accumulator(val1, val2); }
-
-template<typename T>
-std::vector<T> Math::filter(const std::vector<T> &list, Math::UnaryPredicate<T> filterfunc) {
+template<typename T, typename FuncType>
+std::vector<T> Math::filter(const std::vector<T> &list, FuncType &&filterfunc) {
 	std::vector<T> ret;
 	for(size_t i = 0; i < list.size(); ++i)
 		if(filterfunc(list[i]))
@@ -53,8 +25,8 @@ std::vector<T> Math::filter(const std::vector<T> &list, Math::UnaryPredicate<T> 
 	return ret;
 }
 
-template<typename T>
-std::vector<T> Math::map(const std::vector<T> &list, Math::MapFunction<T> mapfunction) {
+template<typename T, typename FuncType>
+std::vector<T> Math::map(const std::vector<T> &list, FuncType &&mapfunction) {
 	std::vector<T> ret;
 	ret.reserve(list.size());
 
@@ -64,8 +36,8 @@ std::vector<T> Math::map(const std::vector<T> &list, Math::MapFunction<T> mapfun
 	return ret;
 }
 
-template<typename T>
-T Math::reduce(const std::vector<T> &list, Math::Accumulator<T> accumulator) {
+template<typename T, typename FuncType>
+T Math::reduce(const std::vector<T> &list, FuncType &&accumulator) {
 	if(list.size() == 0) return T();
 
 	T ret = list[0];
@@ -229,8 +201,3 @@ bool Math::IncreasingSequence<T>::contains(const T& val) {
 	return Math::binary_search(m_sequence, val);
 }
 
-template<typename T>
-Math::UnaryPredicate<T> Math::UnaryPredicate<T>::True(&Math::UnaryPredicate<T>::ReturnTrue);
-
-template<typename T>
-Math::UnaryPredicate<T> Math::UnaryPredicate<T>::False(&Math::UnaryPredicate<T>::ReturnFalse);
