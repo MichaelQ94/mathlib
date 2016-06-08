@@ -37,9 +37,9 @@ unsigned PrimeSieve::operator[](size_t index) {
 }
 
 void PrimeSieve::sift() {
-	size_t max = primesieve.size();
+	size_t size = primesieve.size();
 
-	switch(max) {
+	switch(size) {
 		case 2: primesieve[1] = false;
 		case 1: primesieve[0] = false;
 		case 0: return;
@@ -49,11 +49,11 @@ void PrimeSieve::sift() {
 	}
 
 	primelist.clear();
-	for(size_t i = 2; i < max; ++i)
+	for(size_t i = 2; i < size; ++i)
 		if(primesieve[i]) {
 			primelist.push_back(i);
 
-			for(size_t j = i + i; j < max; j += i)
+			for(size_t j = i + i; j < size; j += i)
 				primesieve[j] = false;
 		}
 }
