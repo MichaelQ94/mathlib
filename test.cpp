@@ -29,6 +29,10 @@ int main() {
 	for(unsigned i = 0; i < temp.size(); ++i)
 		printVec(temp[i]);
 
+	PrimeSieve p(20);
+	for(unsigned i = 0; i < p.max(); ++i) {
+		std::cout << i << ' ' << p.isPrime(i) << std::endl;
+	}
 	return 0;
 }
 
