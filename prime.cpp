@@ -59,7 +59,7 @@ void PrimeSieve::sift() {
 }
 
 std::vector<std::pair<unsigned, unsigned> > PrimeSieve::prime_factorization(unsigned n) {
-	extendList(n / 2);
+	extendList(n);
 
 	std::vector<std::pair<unsigned, unsigned> > primefactors;
 	std::pair<unsigned, unsigned> factor;
