@@ -6,8 +6,10 @@
 
 class PrimeSieve {
 private:
+	std::vector<bool> primesieve;
 	std::vector<unsigned> primelist;
-	unsigned max;
+
+	void sieve();
 
 public:
 	PrimeSieve();
@@ -15,6 +17,7 @@ public:
 	bool isPrime(unsigned);
 	void extendList(unsigned);
 	size_t size() const;
+	unsigned max() const;
 	unsigned operator[](size_t);
 };
 
