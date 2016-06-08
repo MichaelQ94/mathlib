@@ -48,6 +48,7 @@ void PrimeSieve::sift() {
 			primesieve[0] = false;
 	}
 
+	primelist.clear();
 	for(size_t i = 2; i < max; ++i)
 		if(primesieve[i]) {
 			primelist.push_back(i);
