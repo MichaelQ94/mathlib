@@ -2,6 +2,8 @@
 #include <cstddef>
 #include <algorithm>
 #include <unordered_set>
+#include <stdexcept>
+#include <string>
 
 //Prototypes
 template<typename T>
@@ -172,6 +174,59 @@ bool binary_helper(const std::vector<T> &list, const T &val, size_t start, size_
 		return binary_helper(list, val, mid + 1, end);
 	else
 		return true;
+}
+
+template<typename T>
+Math::IncreasingSequence<T>::IncreasingSequence(seq_func function, size_t minIndex)
+	: m_function(function), m_min_index(minIndex), m_index(minIndex) {
+	
+	m_sequence.push_back(m_function(m_min_index));
+}
+
+template<typename T>
+const T& Math::IncreasingSequence<T>::next() {
+	m_sequence.push_back(m_function(++m_index));
+	return m_sequence.back();
+}
+
+template<typename T>
+void Math::IncreasingSequence<T>::extend(const T& val) {
+	while(val > m_sequence.back())
+		next();
+}
+
+template<typename T>
+const T& Math::IncreasingSequence<T>::operator()(size_t index) {
+	if(index < m_min_index) {
+		std::string error_msg("Error: Attempting to access index (");
+		error_msg += index;
+		error_msg += ") of a sequence with minimum index (";
+		error_msg += m_min_index;
+		error_msg += ')';
+
+		throw std::out_of_range(error_msg);
+	}
+
+	while(m_index < index)
+		next();
+	
+	return m_sequence[m_index - m_min_index];
+}
+
+template<typename T>
+size_t Math::IncreasingSequence<T>::index() const {
+	return m_index;
+}
+
+template<typename T>
+size_t Math::IncreasingSequence<T>::min_index() const {
+	return m_min_index;
+}
+
+template<typename T>
+bool Math::IncreasingSequence<T>::contains(const T& val) {
+	extend(val);
+	return Math::binary_search(m_sequence, val);
 }
 
 template<typename T>
