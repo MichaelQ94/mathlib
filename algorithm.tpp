@@ -90,8 +90,12 @@ template<typename T>
 std::vector<std::vector<T> > permutations_iter(std::vector<T> &list, size_t size) {
 	std::vector<std::vector<T> > queue;
 
-	if(size > list.size() || size == 0)
+	if(size > list.size())
 		return queue;
+	else if(size == 0) {
+		queue.push_back(std::vector<T>());
+		return queue;
+	}
 
 	std::vector<std::vector<T> > tempqueue;
 	std::vector<T> &temp = list;
@@ -132,8 +136,12 @@ template<typename T>
 std::vector<std::vector<T> > Math::combinations(std::vector<T> &list, size_t size) {
 	std::vector<std::vector<T> > queue;
 
-	if(size > list.size() || size == 0)
+	if(size > list.size())
 		return queue;
+	else if(size == 0) {
+		queue.push_back(std::vector<T>());
+		return queue;
+	}
 
 	std::vector<std::vector<T> > tempqueue;
 	std::vector<T> &temp = list;
