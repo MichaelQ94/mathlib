@@ -88,10 +88,17 @@ std::vector<std::vector<T> > perm(std::vector<T> &list, size_t index) {
 
 template<typename T>
 std::vector<std::vector<T> > permutations_iter(std::vector<T> &list, size_t size) {
-	if(size > list.size())
-		size = list.size();
+	if(size > list.size()) {
+		std::string errmsg("Error: Attempting to generate ");
+		errmsg += size;
+		errmsg += "-element permutations from a list of ";
+		errmsg += list.size();
+		errmsg += " elements.";
 
-	std::vector<std::vector<T> > perms, queue, tempqueue;
+		throw std::out_of_range(errmsg);
+	}
+
+	std::vector<std::vector<T> > queue, tempqueue;
 	std::vector<T> &temp = list;
 	std::unordered_set<T> prev;
 
@@ -107,6 +114,63 @@ std::vector<std::vector<T> > permutations_iter(std::vector<T> &list, size_t size
 			//fix the element at position i
 			for(size_t k = i; k < temp.size(); ++k) {
 				if(prev.insert(list[k]).second) {
+					std::swap(temp[i], temp[k]);
+					tempqueue.push_back(temp);
+					std::swap(temp[i], temp[k]);
+				}
+			}
+
+			prev.clear();
+		}
+		queue = std::move(tempqueue);
+		tempqueue.clear();
+	}
+
+	for(size_t i = 0; i < queue.size(); ++i)
+		while(queue[i].size() > size)
+			queue[i].pop_back();
+
+	return queue;
+}
+
+template<typename T>
+std::vector<std::vector<T> > Math::combinations(std::vector<T> &list, size_t size) {
+	if(size > list.size()) {
+		std::string error_msg("Error: Attempting to generate ");
+		error_msg += size;
+		error_msg += "-element combinations from a list of ";
+		error_msg += list.size();
+		error_msg += " elements.";
+
+		throw std::out_of_range(error_msg);
+	}
+
+	std::vector<std::vector<T> > queue, tempqueue;
+	std::vector<T> &temp = list;
+	std::unordered_set<T> prev;
+
+	//fix the 0th element
+	for(size_t i = 0; i < list.size(); ++i) {
+		if(prev.insert(list[i]).second) {
+			std::swap(list[0], list[i]);
+			queue.push_back(list);
+			std::swap(list[0], list[i]);
+		}
+	}
+	prev.clear();
+
+	//fix the ith element for i > 0
+	for(size_t i = 1; i < size; ++i) {
+		
+		//queue contains lists for which elements 0 through (i-1) have been fixed
+		for(size_t j = 0; j < queue.size(); ++j) {
+			temp = queue[j];
+
+			//decide the ith element by seeing if it can be replaced by the kth element
+			for(size_t k = i; k < temp.size(); ++k) {
+
+				//duplicates are prevented by ensuring that the list is ordered
+				if(temp[k] >= temp[i - 1] && prev.insert(temp[k]).second) {
 					std::swap(temp[i], temp[k]);
 					tempqueue.push_back(temp);
 					std::swap(temp[i], temp[k]);

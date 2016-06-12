@@ -34,10 +34,13 @@ namespace Math {
 	T reduce(const std::vector<T>&, FuncType&&);
 
 	template<typename T>
-	std::vector<std::vector<T> > permutations(std::vector<T>&, size_t size);
+	std::vector<std::vector<T> > permutations(std::vector<T>&, size_t);
 
 	template<typename T>
 	std::vector<std::vector<T> > permutations(std::vector<T>&);
+
+	template<typename T>
+	std::vector<std::vector<T> > combinations(std::vector<T>&, size_t);
 	
 	template<typename T>
 	bool binary_search(const std::vector<T>&, const T&);

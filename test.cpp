@@ -15,9 +15,11 @@ bool filter(const std::vector<int>&);
 
 int main() {
 	std::vector<int> nums;
+	nums.push_back(2);
 	for(unsigned i = 0; i < 4; ++i) {
 		nums.push_back(i);
 	}
+	nums.push_back(3);
 
 	printVec(Math::filter<int>(nums, &isEven));
 
@@ -25,11 +27,9 @@ int main() {
 
 	std::cout << Math::reduce<int>(nums, &add) << std::endl;
 
-	PrimeSieve primes;
-	auto primefactors = primes.prime_factorization(120);
-	for(unsigned i = 0; i < primefactors.size(); ++i) {
-		std::cout << primefactors[i].first << ' ' << primefactors[i].second << std::endl;
-	}
+	auto combs = Math::combinations(nums, 2);
+	for(size_t i = 0; i < combs.size(); ++i)
+		printVec(combs[i]);
 
 	return 0;
 }
