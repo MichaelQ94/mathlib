@@ -88,17 +88,12 @@ std::vector<std::vector<T> > perm(std::vector<T> &list, size_t index) {
 
 template<typename T>
 std::vector<std::vector<T> > permutations_iter(std::vector<T> &list, size_t size) {
-	if(size > list.size()) {
-		std::string errmsg("Error: Attempting to generate ");
-		errmsg += size;
-		errmsg += "-element permutations from a list of ";
-		errmsg += list.size();
-		errmsg += " elements.";
+	std::vector<std::vector<T> > queue;
 
-		throw std::out_of_range(errmsg);
-	}
+	if(size > list.size() || size == 0)
+		return queue;
 
-	std::vector<std::vector<T> > queue, tempqueue;
+	std::vector<std::vector<T> > tempqueue;
 	std::vector<T> &temp = list;
 	std::unordered_set<T> prev;
 
@@ -111,7 +106,7 @@ std::vector<std::vector<T> > permutations_iter(std::vector<T> &list, size_t size
 		for(size_t j = 0; j < queue.size(); ++j) {
 			temp = queue[j];
 
-			//fix the element at position i
+			//fix the element at position i in temp
 			for(size_t k = i; k < temp.size(); ++k) {
 				if(prev.insert(list[k]).second) {
 					std::swap(temp[i], temp[k]);
@@ -135,17 +130,12 @@ std::vector<std::vector<T> > permutations_iter(std::vector<T> &list, size_t size
 
 template<typename T>
 std::vector<std::vector<T> > Math::combinations(std::vector<T> &list, size_t size) {
-	if(size > list.size()) {
-		std::string error_msg("Error: Attempting to generate ");
-		error_msg += size;
-		error_msg += "-element combinations from a list of ";
-		error_msg += list.size();
-		error_msg += " elements.";
+	std::vector<std::vector<T> > queue;
 
-		throw std::out_of_range(error_msg);
-	}
+	if(size > list.size() || size == 0)
+		return queue;
 
-	std::vector<std::vector<T> > queue, tempqueue;
+	std::vector<std::vector<T> > tempqueue;
 	std::vector<T> &temp = list;
 	std::unordered_set<T> prev;
 
@@ -166,7 +156,7 @@ std::vector<std::vector<T> > Math::combinations(std::vector<T> &list, size_t siz
 		for(size_t j = 0; j < queue.size(); ++j) {
 			temp = queue[j];
 
-			//decide the ith element by seeing if it can be replaced by the kth element
+			//decide the ith element of temp by seeing if it can be replaced by the kth element
 			for(size_t k = i; k < temp.size(); ++k) {
 
 				//duplicates are prevented by ensuring that the list is ordered
