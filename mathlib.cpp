@@ -76,7 +76,7 @@ unsigned Math::choose(unsigned n, unsigned r) {
 		mid = i / 2;
 		end = MIN(r, mid);
 
-		for(unsigned j = 1; j < = end; ++j) {
+		for(unsigned j = 1; j <= end; ++j) {
 			current[j] = prev[j - 1] + prev[j];
 		}
 
@@ -87,7 +87,7 @@ unsigned Math::choose(unsigned n, unsigned r) {
 		current = temp;
 	}
 
-	unsigned ret = current[r];
+	unsigned ret = prev[r];
 
 	delete [] current;
 	delete [] prev;
