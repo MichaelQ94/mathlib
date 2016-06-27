@@ -1,6 +1,8 @@
 #include "mathlib.h"
 #define BITS_PER_BYTE 8
 
+#define MIN(a, b) ((a < b) ? (a) : (b))
+
 unsigned Math::gcd(unsigned a, unsigned b) {
 	unsigned large, small, rgcd;
 	if(a < b) {
@@ -52,12 +54,45 @@ unsigned Math::permute(unsigned n, unsigned r) {
 }
 
 unsigned Math::choose(unsigned n, unsigned r) {
-	if(r <= n) {
-		return Math::permute(n, r) / Math::fac(r);
-	}
-	else {
+	if(r > n)
 		return 0;
+
+	if(r > n/2)
+		r = n - r;
+	
+	unsigned *current = new unsigned[r + 1];
+	unsigned *prev = new unsigned[r + 1];
+	unsigned *temp;
+
+	current[0] = 1;
+	prev[0] = 1;
+	for(unsigned i = 1; i <= r; ++i) {
+		current[i] = 0;
+		prev[i] = 0;
 	}
+
+	unsigned mid, end;
+	for(unsigned i = 1; i <= n; ++i) {
+		mid = i / 2;
+		end = MIN(r, mid);
+
+		for(unsigned j = 1; j < = end; ++j) {
+			current[j] = prev[j - 1] + prev[j];
+		}
+
+		current[mid + 1] = current[mid];
+
+		temp = prev;
+		prev = current;
+		current = temp;
+	}
+
+	unsigned ret = current[r];
+
+	delete [] current;
+	delete [] prev;
+
+	return ret;
 }
 
 unsigned Math::countdigits(unsigned n) {

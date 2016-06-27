@@ -31,6 +31,13 @@ int main() {
 	for(size_t i = 0; i < combs.size(); ++i)
 		printVec(combs[i]);
 
+	for(int i = 0; i < 10; ++i) {
+		for(int j = 0; j < 10; ++j) {
+			std::cout << Math::choose(i, j) << ' ';
+		}
+		std::cout << std::endl;
+	}
+
 	return 0;
 }
 
