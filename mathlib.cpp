@@ -66,12 +66,14 @@ unsigned Math::choose(unsigned n, unsigned r) {
 
 	current[0] = 1;
 	prev[0] = 1;
+
 	for(unsigned i = 1; i <= r; ++i) {
 		current[i] = 0;
 		prev[i] = 0;
 	}
 
 	unsigned mid, end;
+	
 	for(unsigned i = 1; i <= n; ++i) {
 		mid = i / 2;
 		end = MIN(r, mid);
@@ -80,7 +82,9 @@ unsigned Math::choose(unsigned n, unsigned r) {
 			current[j] = prev[j - 1] + prev[j];
 		}
 
-		current[mid + 1] = current[mid];
+		if(mid < r) {
+			current[mid + 1] = current[mid];
+		}
 
 		temp = prev;
 		prev = current;
